@@ -4,37 +4,49 @@ import 'package:flame/palette.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:save_redd/SaveRed.dart';
+import 'package:save_redd/controllers/textedButton.dart';
 import 'package:save_redd/screens/BaseScreen.dart';
 import 'package:save_redd/screens/ScreenState.dart';
 
 class MenuScreen extends BaseScreen {
-  static const blue = PaletteEntry(Colors.lightBlue);
-  Size size = Size(0, 0);
+  //static const blue = PaletteEntry(Colors.lightBlue);
+  //Size size = Size(0, 0);
+
+  //we create new text button as an object and initialize in the constructor
+  TextedButton _startButton;
+
+  MenuScreen() {
+    _startButton = TextedButton('START', 0.5, 0.5);
+  }
+
+
 
   void onTapDown(TapDownDetails details) {
-    // TODO: implement resize
     //Change active screen when user taps
-    saveRedSquare.switchScreen(ScreenState.kPlayGroundScreen);
-    print("The Menu Screen");
+    // saveRedSquare.switchScreen(ScreenState.kPlayGroundScreen);
+    // print("The Menu Screen");
+    _startButton.onTapDown(details, () {
+      saveRedSquare.switchScreen(ScreenState.kPlayGroundScreen);
+    });
   }
 
   @override
   void render(Canvas canvas) {
-    // TODO: implement render
     // we will use the screen size which is passed by the resize method to draw a rectangle
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), blue.paint);
+    //canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), blue.paint);
+    _startButton.render(canvas);
   }
 
   @override
   void resize(Size size) {
-    // TODO: implement resize
     //store screen size when resize method gets called
-    this.size = size;
+    //this.size = size;
+    _startButton.resize(size);
   }
 
   @override
   void update(double t) {
-    // TODO: implement update
+    _startButton.update(t);
   }
 
 }
