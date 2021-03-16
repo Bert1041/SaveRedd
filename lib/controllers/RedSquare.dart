@@ -17,11 +17,16 @@ class RedSquare extends BaseWidget {
   double _height = 0;
 
   static const blue = PaletteEntry(Colors.blueAccent);
-  Size size = Size(0,0);
+  static const red = PaletteEntry(Colors.redAccent);
+
+  Size size = Size(0, 0);
 
   @override
   void render(Canvas canvas) {
-    canvas.drawRect(Rect.fromLTWH(_x, _y, _width, _height), blue.paint);
+    canvas.drawRect(
+      Rect.fromLTWH(_x, _y, _width, _height),
+      (_isSquareSafe() ? blue.paint : red.paint),
+    );
   }
 
   // we store the screen size
@@ -30,7 +35,7 @@ class RedSquare extends BaseWidget {
     this.size = size;
     /* to ensure it is a square we have to calculate the ratio, width and height and use it when we choose the size
     10% of the screen for the width we have to consider the ratio as well*/
-    final ratio = size.height/size.width;
+    final ratio = size.height / size.width;
 
     _width = size.width * 0.1 * ratio;
     _height = size.height * 0.1;
@@ -48,8 +53,7 @@ class RedSquare extends BaseWidget {
   }
 
   void _updateSpeed() {
-    if(_horizontalSpeed < 10)
-      _horizontalSpeed += 0.001;
+    if (_horizontalSpeed < 10) _horizontalSpeed += 0.001;
   }
 
   /*
@@ -59,13 +63,11 @@ class RedSquare extends BaseWidget {
   * */
 
   void _calcSign() {
-    if(_x > size.width - _width * 2){
+    if (_x > size.width - _width) {
       _horizontalSign = -1;
-    }
-    else if(_x < _width * 2){
+    } else if (_x < _horizontalSpeed) {
       _horizontalSign = 1;
     }
-
   }
   /*
   we'll change the sign whenever the square is too close to one of the edges
@@ -80,4 +82,17 @@ class RedSquare extends BaseWidget {
     _x += _horizontalSpeed * _horizontalSign;
   }
 
+/*
+implement a method witch will return true if the square is in the safe area
+* */
+  bool _isSquareSafe() {
+    return _isXSafe();
+  }
+
+  bool _isXSafe() {
+    if (_x < size.width - _width * 2 && _x > _width) {
+      return true;
+    }
+    return false;
+  }
 }

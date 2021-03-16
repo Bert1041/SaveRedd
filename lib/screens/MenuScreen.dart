@@ -14,9 +14,12 @@ class MenuScreen extends BaseScreen {
 
   //we create new text button as an object and initialize in the constructor
   TextedButton _startButton;
+  TextedButton _scoreButton;
+
 
   MenuScreen() {
-    _startButton = TextedButton('START', 0.5, 0.5);
+    _startButton = TextedButton('START', 0.5, 0.4);
+    _scoreButton = TextedButton('HIGH SCORE', 0.5, 0.55);
   }
 
 
@@ -28,6 +31,9 @@ class MenuScreen extends BaseScreen {
     _startButton.onTapDown(details, () {
       saveRedSquare.switchScreen(ScreenState.kPlayGroundScreen);
     });
+    _scoreButton.onTapDown(details, () {
+      saveRedSquare.switchScreen(ScreenState.kScoreScreen);
+    });
   }
 
   @override
@@ -35,6 +41,7 @@ class MenuScreen extends BaseScreen {
     // we will use the screen size which is passed by the resize method to draw a rectangle
     //canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), blue.paint);
     _startButton.render(canvas);
+    _scoreButton.render(canvas);
   }
 
   @override
@@ -42,6 +49,7 @@ class MenuScreen extends BaseScreen {
     //store screen size when resize method gets called
     //this.size = size;
     _startButton.resize(size);
+    _scoreButton.resize(size);
   }
 
   @override
