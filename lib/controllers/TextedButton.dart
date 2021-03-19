@@ -53,6 +53,7 @@ class TextedButton extends BaseWidget {
       color: Colors.white,
       fontSize: size.width * 0.1,
     );
+
     //re-initialize painter again and call the layout method again
     _painter.text = TextSpan(text: _text, style: _textStyle);
     _painter.layout();

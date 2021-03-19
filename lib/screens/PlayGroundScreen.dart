@@ -4,6 +4,7 @@ import 'package:flame/palette.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:save_redd/controllers/RedSquare.dart';
+import 'package:save_redd/controllers/ScoreHolder.dart';
 import 'package:save_redd/screens/BaseScreen.dart';
 
 import '../SaveRed.dart';
@@ -12,9 +13,11 @@ import 'ScreenState.dart';
 class PlayGroundScreen extends BaseScreen {
 
   RedSquare _redSquare;
+  ScoreHolder _scoreHolder;
 
   PlayGroundScreen () {
     _redSquare = RedSquare();
+    _scoreHolder = ScoreHolder(0.5, 0.1);
   }
 // delegate all the jobs to the new created object
 
@@ -31,6 +34,7 @@ class PlayGroundScreen extends BaseScreen {
     // we will use the screen size which is passed by the resize method to draw a rectangle
     //canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), red.paint);
     _redSquare.render(canvas);
+    _scoreHolder.render(canvas);
   }
 
   @override
@@ -38,11 +42,13 @@ class PlayGroundScreen extends BaseScreen {
     //store screen size when resize method gets called
     //this.size = size;
     _redSquare.resize(size);
+    _scoreHolder.resize(size);
   }
 
   @override
   void update(double t) {
     _redSquare.update(t);
+    _scoreHolder.update(t);
   }
 
 }

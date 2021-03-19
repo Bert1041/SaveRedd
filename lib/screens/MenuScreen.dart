@@ -4,7 +4,7 @@ import 'package:flame/palette.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:save_redd/SaveRed.dart';
-import 'package:save_redd/controllers/textedButton.dart';
+import 'package:save_redd/controllers/TextedButton.dart';
 import 'package:save_redd/screens/BaseScreen.dart';
 import 'package:save_redd/screens/ScreenState.dart';
 
