@@ -11,11 +11,13 @@ import '../SaveRed.dart';
 import 'ScreenState.dart';
 
 class PlayGroundScreen extends BaseScreen {
-
   RedSquare _redSquare;
   ScoreHolder _scoreHolder;
 
-  PlayGroundScreen () {
+  bool _isGameOver = false;
+
+
+  PlayGroundScreen() {
     _redSquare = RedSquare();
     _scoreHolder = ScoreHolder(0.5, 0.1);
   }
@@ -24,9 +26,7 @@ class PlayGroundScreen extends BaseScreen {
   void onTapDown(TapDownDetails details) {
     //Change active screen when user taps
     //saveRedSquare.switchScreen(ScreenState.kScoreScreen);
-    _redSquare.onTapDown(details, () {
-      saveRedSquare.switchScreen(ScreenState.kScoreScreen);
-    });
+    _redSquare.onTapDown(details, () {});
   }
 
   @override
@@ -46,9 +46,15 @@ class PlayGroundScreen extends BaseScreen {
   }
 
   @override
-  void update(double t) {
-    _redSquare.update(t);
-    _scoreHolder.update(t);
-  }
+  void update() {
+    // if the game is over we have to stop calling the update method on the square and score holder to make them stop
+    if (!_isGameOver) {
+      _redSquare.update();
+      _scoreHolder.update();
 
+      if (_redSquare.isGameOver()) {
+        _isGameOver = true;
+      }
+    }
+  }
 }

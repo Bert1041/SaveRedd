@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 
 abstract class BaseWidget {
   void render(Canvas canvas);
-  void update(double t);
+  void update();
   void resize(Size size);
 
 

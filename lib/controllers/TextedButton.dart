@@ -66,7 +66,7 @@ class TextedButton extends BaseWidget {
   }
 
   @override
-  void update(double t) {
+  void update() {
     // TODO: implement update
   }
 

@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flame/game/game.dart';
 import 'package:flame/gestures.dart';
+import 'package:flame/util.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
 import 'package:save_redd/screens/BaseScreen.dart';
 import 'package:save_redd/screens/MenuScreen.dart';
 import 'package:save_redd/screens/PlayGroundScreen.dart';
@@ -11,14 +14,13 @@ import 'package:save_redd/screens/ScreenState.dart';
 
 SaveRedSquare saveRedSquare = SaveRedSquare();
 
-
 class SaveRedSquare extends Game with TapDetector {
-
-
   ScreenState _screenState;
   BaseScreen _menuScreen;
   BaseScreen _playGroundScreen;
   BaseScreen _scoreScreen;
+
+  Function _fnUpdate;
 
   SaveRedSquare() {
     _screenState = ScreenState.kMenuScreen;
@@ -26,8 +28,8 @@ class SaveRedSquare extends Game with TapDetector {
     _menuScreen = MenuScreen();
     _playGroundScreen = PlayGroundScreen();
     _scoreScreen = ScoreScreen();
+    _fnUpdate = _init;
   }
-
 
   @override
   void render(Canvas canvas) {
@@ -39,7 +41,8 @@ class SaveRedSquare extends Game with TapDetector {
   @override
   void update(double t) {
     //print("UPDATE");
-    _getActiveScreen()?.update(t);
+    //_getActiveScreen()?.update(t);
+    _fnUpdate();
   }
 
   @override
@@ -58,7 +61,6 @@ class SaveRedSquare extends Game with TapDetector {
     _getActiveScreen()?.onTapDown(details);
   }
 
-
   // return the object screen
   BaseScreen _getActiveScreen() {
     switch (_screenState) {
@@ -73,14 +75,23 @@ class SaveRedSquare extends Game with TapDetector {
     }
   }
 
-
   // method to update active screen
   void switchScreen(ScreenState newScreen) {
     _screenState = newScreen;
   }
 
-
-
-
-
+// the new update will pass the job to hte active screen
+Future<void> _init() async {
+  _fnUpdate = _update;
+  // then we need flame utils variable
+  Util flameUtil = Util();
+  await flameUtil.fullScreen();
+  await flameUtil.setOrientation(DeviceOrientation.portraitDown);
 }
+
+void _update() {
+  _getActiveScreen()?.update();
+}
+}
+
+

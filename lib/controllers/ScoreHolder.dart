@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:save_redd/controllers/BaseWidget.dart';
 
 class ScoreHolder extends BaseWidget {
-
   final double _xRatio;
   final double _yRatio;
 
@@ -105,9 +104,9 @@ class ScoreHolder extends BaseWidget {
   }
 
   @override
-  void update(double t) {
+  void update() {
     _fnUpdate();
   }
 
-  Future<void> onTapDown(TapDownDetails details, Function fn) {}
+  void onTapDown(TapDownDetails details, Function fn) {}
 }

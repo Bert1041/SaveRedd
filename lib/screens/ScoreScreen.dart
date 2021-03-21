@@ -33,7 +33,7 @@ class ScoreScreen extends BaseScreen {
   }
 
   @override
-  void update(double t) {
+  void update() {
     // TODO: implement update
   }
 

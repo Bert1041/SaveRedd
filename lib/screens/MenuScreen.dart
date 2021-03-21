@@ -53,8 +53,8 @@ class MenuScreen extends BaseScreen {
   }
 
   @override
-  void update(double t) {
-    _startButton.update(t);
+  void update() {
+    _startButton.update();
   }
 
 }
