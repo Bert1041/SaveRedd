@@ -21,6 +21,7 @@ class SaveRedSquare extends Game with TapDetector {
   BaseScreen _scoreScreen;
 
   Function _fnUpdate;
+  Size _size = Size(0,0);
 
   SaveRedSquare() {
     _screenState = ScreenState.kMenuScreen;
@@ -53,6 +54,9 @@ class SaveRedSquare extends Game with TapDetector {
     _menuScreen?.resize(size);
     _playGroundScreen?.resize(size);
     _scoreScreen?.resize(size);
+
+    _size = size;
+
   }
 
   void onTapDown(TapDownDetails details) {
@@ -77,21 +81,47 @@ class SaveRedSquare extends Game with TapDetector {
 
   // method to update active screen
   void switchScreen(ScreenState newScreen) {
-    _screenState = newScreen;
-  }
+ //   _screenState = newScreen;
+// we delay this using a timer, after 3 seconds
+      switch (newScreen) {
+        case ScreenState.kScoreScreen:
+          Timer(new Duration(seconds: 3), () {
+            _scoreScreen = ScoreScreen();
+            _scoreScreen.resize(_size);
+            _screenState = newScreen;
+          });
+          break;
+        case ScreenState.kPlayGroundScreen:
+          _playGroundScreen = PlayGroundScreen();
+          _playGroundScreen.resize(_size);
+          Timer(new Duration(milliseconds: 10), () {
+            _screenState = newScreen;
+          });
+          break;
+        case ScreenState.kMenuScreen:
+          _screenState = newScreen;
+          _menuScreen = MenuScreen();
+          _menuScreen.resize(_size);
+          Timer(new Duration(milliseconds: 10), () {
+            _screenState = newScreen;
+          });
+          break;
+          break;
+        default:
+          _screenState = newScreen;
+      }
+    }
 
 // the new update will pass the job to hte active screen
-Future<void> _init() async {
-  _fnUpdate = _update;
-  // then we need flame utils variable
-  Util flameUtil = Util();
-  await flameUtil.fullScreen();
-  await flameUtil.setOrientation(DeviceOrientation.portraitDown);
-}
+  Future<void> _init() async {
+    _fnUpdate = _update;
+    // then we need flame utils variable
+    Util flameUtil = Util();
+    await flameUtil.fullScreen();
+    await flameUtil.setOrientation(DeviceOrientation.portraitDown);
+  }
 
-void _update() {
-  _getActiveScreen()?.update();
+  void _update() {
+    _getActiveScreen()?.update();
+  }
 }
-}
-
-

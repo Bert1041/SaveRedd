@@ -14,6 +14,7 @@ class PlayGroundScreen extends BaseScreen {
   RedSquare _redSquare;
   ScoreHolder _scoreHolder;
 
+  //create a new variable to store whether the game is over or not
   bool _isGameOver = false;
 
 
@@ -48,12 +49,20 @@ class PlayGroundScreen extends BaseScreen {
   @override
   void update() {
     // if the game is over we have to stop calling the update method on the square and score holder to make them stop
+    // there are three major points to consider
+    /*
+    1. when game is over send request to switch screen
+    2. it shouldn't happen instantly, we want the user to see the square touched the side of the screen
+    3. make sure the switch screen request is sent only once
+    * */
     if (!_isGameOver) {
       _redSquare.update();
       _scoreHolder.update();
 
       if (_redSquare.isGameOver()) {
         _isGameOver = true;
+        saveRedSquare.switchScreen(ScreenState.kScoreScreen);
+
       }
     }
   }
